@@ -4,11 +4,22 @@
 	<h3>Agregar nueva tarea</h3>
 
 	<form [formGroup]="nuevaTarea" (submit)="agregar()">
-		<label for = "titulo">Título: </label> <input id="titulo" name="titulo" type="text" formControlName="titulo"><br><br>
-		<label for = "duracion">Duración (minutos): </label> <input id="duracion" name="duracion" type="number" formControlName="duracion"><br><br>
-		<button name= "add" type="submit" class="btn btn-default">
-			Agregar tarea nueva
-		</button>
+		<div class ="container">
+			<div class="row">
+				<div class="col-sm">
+					<label for = "titulo">Título: </label> <input id="titulo" name="titulo" type="text" formControlName="titulo"><br><br>
+				</div>
+				<div class="col-sm">
+					<label for = "duracion">Duración (minutos): </label> <input id="duracion" name="duracion" type="number" formControlName="duracion"><br><br>
+				</div>
+				<div class="col-sm">
+					<button style="background-color: aquamarine;" name= "add" type="submit" class="btn btn-default">
+						Agregar tarea nueva
+					</button>
+				</div>
+			</div>
+		</div>
+
 	</form>
 
 	<hr>
@@ -17,11 +28,15 @@
 		<thead>
 			<th>Título</th>
 			<th>Duración (minutos)</th>
+			<th>Acciones</th>
 		</thead>
 		<tbody>
 			<tr *ngFor="let tarea of tareas">
-				<td>{{tarea.titulo}}</td>
-				<td>{{tarea.minutos}} minutos</td>
+				<td *ngIf="!tarea.eliminada">{{tarea.titulo}}</td>
+				<td *ngIf="!tarea.eliminada">{{tarea.minutos}} minutos</td>
+				<td *ngIf="!tarea.eliminada">
+					<button class="b2" id="eliminar" name="eliminar" (click)="eliminar(tarea)">¿Eliminar?</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>

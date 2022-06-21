@@ -33,12 +33,15 @@ export class AppComponent {
 	//¿el form esta lleno?
 	verificar(): Boolean {
 		if (this.nuevaTarea.get('titulo').value == '') {
-			alert('Debe ingresar un titulo para la tarea');
+			alert('Debe ingresar un titulo para la tarea, intente de nuevo');
+			this.nuevaTarea.get('duracion').reset('');
+
 			return false;
 		}
 
 		if (this.nuevaTarea.get('duracion').value <= 0) {
-			alert('La duración no ha sido introducida');
+			alert('La duración no ha sido introducida, intente de nuevo');
+			this.nuevaTarea.get('titulo').reset('');
 			return false;
 		}
 
@@ -47,20 +50,30 @@ export class AppComponent {
 
 	agregar() {
 		if(this.verificar()){
+			//Agregar una nueva tarea si el valor de "Verificar" es verdadero
 			this.tareas.push(new Tarea(
 				this.obtenerID(),
 				this.nuevaTarea.get('titulo').value,
 				this.nuevaTarea.get('duracion').value,
+				false
 				));
 
-			//Vaciamos nuestras variables del form
+			// Eliminar datos residuales de form	
 			this.nuevaTarea.get('titulo').reset('');
 			this.nuevaTarea.get('duracion').reset('');
 		}
 	}
 
+	//recuperar numero id
 	obtenerID():number{
 		return this.tareas.length + 1;
+	}
+
+	//¿Como eliminar una tarea a la vez?
+	eliminar(tarea: Tarea){
+		if(confirm(`¿Deseas eliminar la tarea "${tarea.titulo}" con duración de "${tarea.minutos}" minutos ?`) == true){
+			tarea.eliminada = true;
+		}
 	}
 
 }
