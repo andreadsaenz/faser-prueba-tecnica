@@ -1,7 +1,7 @@
 <div class="container">
 	<h1>Prueba técnica - Estudio Faser</h1>
 	<hr>
-	<h3>Agregar nueva tarea</h3>
+	<h2>Agregar nueva tarea</h2>
 
 	<form [formGroup]="nuevaTarea" (submit)="agregar()">
 		<div class ="container">
@@ -24,6 +24,21 @@
 
 	<hr>
 	<h2>Listado de tareas</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-md">
+				<button style="background-color: greenyellow ;" (click)="ordenar(true)">
+					ASCENDENTE
+				</button>
+				&nbsp; &nbsp;
+				<button style="background-color: rgb(255, 60, 0);" (click)="ordenar(false)">
+					DESCENDENTE
+				</button>
+			</div>
+			
+		</div>
+	</div>
+
 	<table>
 		<thead>
 			<th>Título</th>

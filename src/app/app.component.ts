@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { Tarea } from './tarea';
-import { FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-root',
@@ -29,6 +29,16 @@ export class AppComponent {
 		this.tareas = await this.service.obtenerTareas();
 	}
 
+	//¿Como ordenar una tabla por medio de la duración de la tarea?
+	ordenar(orden: boolean) {
+		if (orden == false) {
+			//Orden descendente
+			this.tareas.sort((tarea1, tarea2) => (tarea1.minutos < tarea2.minutos) ? 1 : -1);
+		} else {
+			//Orden ascendente
+			this.tareas.sort((tarea1, tarea2) => (tarea1.minutos > tarea2.minutos) ? 1 : -1);
+		}
+	}
 
 	//¿el form esta lleno?
 	verificar(): Boolean {
@@ -49,14 +59,14 @@ export class AppComponent {
 	}
 
 	agregar() {
-		if(this.verificar()){
+		if (this.verificar()) {
 			//Agregar una nueva tarea si el valor de "Verificar" es verdadero
 			this.tareas.push(new Tarea(
 				this.obtenerID(),
 				this.nuevaTarea.get('titulo').value,
 				this.nuevaTarea.get('duracion').value,
-				false
-				));
+				false, false
+			));
 
 			// Eliminar datos residuales de form	
 			this.nuevaTarea.get('titulo').reset('');
@@ -65,15 +75,17 @@ export class AppComponent {
 	}
 
 	//recuperar numero id
-	obtenerID():number{
+	obtenerID(): number {
 		return this.tareas.length + 1;
 	}
 
 	//¿Como eliminar una tarea a la vez?
-	eliminar(tarea: Tarea){
-		if(confirm(`¿Deseas eliminar la tarea "${tarea.titulo}" con duración de "${tarea.minutos}" minutos ?`) == true){
+	eliminar(tarea: Tarea) {
+		if (confirm(`¿Deseas eliminar la tarea "${tarea.titulo}" con duración de "${tarea.minutos}" minutos ?`) == true) {
 			tarea.eliminada = true;
 		}
 	}
+
+
 
 }
