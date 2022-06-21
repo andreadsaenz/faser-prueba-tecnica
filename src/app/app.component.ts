@@ -17,6 +17,9 @@ export class AppComponent {
 		duracion: new FormControl('')
 	});
 
+	//¿Todas las tareas seleccionadas?
+	todas = false
+
 	constructor(
 		public service: AppService,
 	) { }
@@ -86,6 +89,25 @@ export class AppComponent {
 		}
 	}
 
+	//¿Es destacada?
+	seleccionarTarea(tarea: Tarea){
+		tarea.seleccionada = !tarea.seleccionada;
+	}
 
-
+	all(){
+		if(this.todas == true){
+			//recorrer arreglo de tareas
+			for(let tarea of this.tareas){
+				if(tarea.eliminada == false){
+					tarea.seleccionada = false
+				} 
+			} this.todas = false;
+		}else{
+			for(let tarea of this.tareas){
+				if(tarea.eliminada == false){
+					tarea.seleccionada = true
+				} 
+			} this.todas = true;
+		}
+	}
 }

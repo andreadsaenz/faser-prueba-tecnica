@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" align="center">
 	<h1>Prueba técnica - Estudio Faser</h1>
 	<hr>
 	<h2>Agregar nueva tarea</h2>
@@ -23,8 +23,8 @@
 	</form>
 
 	<hr>
-	<h2>Listado de tareas</h2>
-	<div class="container">
+	<h2 align="center">Listado de tareas</h2>
+	<div class="container" align="center">
 		<div class="row">
 			<div class="col-md">
 				<button style="background-color: greenyellow ;" (click)="ordenar(true)">
@@ -39,14 +39,20 @@
 		</div>
 	</div>
 
-	<table>
+	<table align="center">
 		<thead>
+			<th>
+				<input type="checkbox" id="select" (change)="all()" [checked]="todas">
+			</th>
 			<th>Título</th>
-			<th>Duración (minutos)</th>
+			<th>Duración</th>
 			<th>Acciones</th>
 		</thead>
 		<tbody>
-			<tr *ngFor="let tarea of tareas">
+			<tr *ngFor="let tarea of tareas" [ngStyle]="{'background-color': tarea.seleccionada == true ?  '#48C9B0 ': 'white'}">
+				<td *ngIf="!tarea.eliminada">
+					<input type="checkbox" id={{tarea.id}} (change)="seleccionarTarea(tarea)" [checked]="tarea.seleccionada">
+				</td>
 				<td *ngIf="!tarea.eliminada">{{tarea.titulo}}</td>
 				<td *ngIf="!tarea.eliminada">{{tarea.minutos}} minutos</td>
 				<td *ngIf="!tarea.eliminada">
